@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Starting AngelSense Geocoder Facade"
+echo "Starting FleetTracker Geocoder Facade"
 
 DIRNAME=`dirname $0`
 APP_HOME=`cd $DIRNAME/..;pwd;`
