@@ -1,4 +1,4 @@
-package com.com.tikal.angelsense.geocodefacade.config;
+package com.tikal.angelsense.geocodefacade.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;

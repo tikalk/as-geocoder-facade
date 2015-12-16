@@ -39,12 +39,21 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 
+dependencyManagement {
+     imports {
+          mavenBom 'org.springframework.cloud:spring-cloud-netflix:1.0.4.RELEASE'
+     }
+}
+
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-redis'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-test'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile 'org.springframework.boot:spring-boot-starter-log4j'
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
+    compile 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard'
     compile 'org.jolokia:jolokia-core'
     compile 'com.goebl:david-webb:1.2.0'
     
