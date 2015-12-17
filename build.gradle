@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE")
+        classpath('com.bmuschko:gradle-docker-plugin:2.5')
     }
 }
 
@@ -12,7 +13,12 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'maven'
+apply plugin: 'com.bmuschko.docker-remote-api'
+apply plugin: 'com.bmuschko.docker-remote-api'
 
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 repositories {
     mavenCentral()
@@ -23,8 +29,14 @@ configurations {
     compile.exclude module: 'logback-classic'
     compile.exclude module: 'logback-core'
 }
+docker{
+    url = "${dockerHost}"
+    //certPath=new File("${certUrl}")
+}
+task zip(type: Tar, dependsOn: bootRepackage) {
+    extension = 'tar.gz'
+    compression = Compression.GZIP
 
-task zip(type: Zip, dependsOn: bootRepackage) {
     from '.'
     baseName = 'as-geocoder-facade'
     include 'config/**'
@@ -38,6 +50,7 @@ build.dependsOn(zip)
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+<<<<<<< HEAD
 
 dependencyManagement {
      imports {
@@ -45,19 +58,37 @@ dependencyManagement {
      }
 }
 
+=======
+configurations{
+    dockerJackson
+}
+>>>>>>> branch 'master' of https://github.com/tikalk/as-geocoder-facade.git
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-redis'
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile('org.springframework.boot:spring-boot-starter-web')
     compile 'org.springframework.boot:spring-boot-starter-test'
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile('org.springframework.boot:spring-boot-starter-actuator')
     compile 'org.springframework.boot:spring-boot-starter-log4j'
     compile 'org.springframework.cloud:spring-cloud-starter-eureka'
     compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
     compile 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard'
     compile 'org.jolokia:jolokia-core'
     compile 'com.goebl:david-webb:1.2.0'
-    
-    
-    
+    dockerJackson 'com.fasterxml.jackson.core:jackson-core:2.1.2'
+    dockerJackson 'com.fasterxml.jackson.core:jackson-databind:2.1.2'
+}
+
+task buildImage(type: DockerBuildImage) {
+    dependsOn zip
+    quiet = false
+    inputDir = projectDir
+
+    tag = "$registerBaseName/$dockerBranch/$project.name:$dockerTag"
+}
+task pushImage(type: DockerPushImage) {
+    classpath = configurations.dockerJackson + configurations.dockerJava  //"com.fasterxml.jackson.core*:2.6.3") //.exclude(group:"com.fasterxml.jackson.core" , module:"*" )
+    dependsOn buildImage
+    imageName = "$registerBaseName/$dockerBranch/$project.name"
+    tag="$dockerTag"
 }
 
