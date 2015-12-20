@@ -50,7 +50,6 @@ build.dependsOn(zip)
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-<<<<<<< HEAD
 
 dependencyManagement {
      imports {
@@ -58,11 +57,9 @@ dependencyManagement {
      }
 }
 
-=======
 configurations{
     dockerJackson
 }
->>>>>>> branch 'master' of https://github.com/tikalk/as-geocoder-facade.git
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-redis'
     compile('org.springframework.boot:spring-boot-starter-web')
