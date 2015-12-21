@@ -4,7 +4,7 @@ FROM java:8
 
 
 
-EXPOSE 8080
+EXPOSE 7080
 
 # Copy your fat jar to the container
 ADD build/distributions/as-geocoder-facade.tar.gz /as-geocoder-facade
