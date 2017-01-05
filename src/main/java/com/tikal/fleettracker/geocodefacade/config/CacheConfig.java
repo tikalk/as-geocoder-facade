@@ -15,10 +15,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 @EnableCaching
 public class CacheConfig extends CachingConfigurerSupport {
 
-	@Value("${redis.host}")
+	@Value("${redis.host:redis}")
 	private String redisHost;
 	
-	@Value("${redis.port}")
+	@Value("${redis.port:6379}")
 	private int redisPort;
 	
 	// 0 is no expiration

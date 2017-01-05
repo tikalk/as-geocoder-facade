@@ -37,14 +37,20 @@ task zip(type: Tar, dependsOn: bootRepackage) {
     extension = 'tar.gz'
     compression = Compression.GZIP
 
-    from '.'
-    baseName = 'as-geocoder-facade'
-    include 'config/**'
-    include 'run-bin/*.sh'
-    include 'run-bin/*.bat'
-    include 'run-bin/*.sql'
-    include 'build/libs/*.jar'
-}
+    from ('.'){
+        baseName 'as-geocoder-facade'
+        include 'config/**'
+        exclude 'run-bin/*.sh'
+        include 'run-bin/*.bat'
+        include 'run-bin/*.sql'
+        include 'build/libs/*.jar'
+     }
+     from ('.'){
+        baseName 'as-geocoder-facade'
+        include 'run-bin/*.sh'
+        fileMode 0755
+     }
+ }
 build.dependsOn(zip)
 
 sourceCompatibility = 1.8
