@@ -38,7 +38,7 @@ task zip(type: Tar, dependsOn: bootRepackage) {
     compression = Compression.GZIP
 
     from ('.'){
-        baseName 'as-geocoder-facade'
+        baseName 'ft-geocoder-facade'
         include 'config/**'
         exclude 'run-bin/*.sh'
         include 'run-bin/*.bat'
@@ -46,7 +46,7 @@ task zip(type: Tar, dependsOn: bootRepackage) {
         include 'build/libs/*.jar'
      }
      from ('.'){
-        baseName 'as-geocoder-facade'
+        baseName 'ft-geocoder-facade'
         include 'run-bin/*.sh'
         fileMode 0755
      }
@@ -86,12 +86,12 @@ task buildImage(type: DockerBuildImage) {
     quiet = false
     inputDir = projectDir
 
-    tag = "$registerBaseName/$dockerBranch/$project.name:$dockerTag"
+    tag = "$registerBaseName$dockerBranch/$project.name:$dockerTag"
 }
 task pushImage(type: DockerPushImage) {
     classpath = configurations.dockerJackson + configurations.dockerJava  //"com.fasterxml.jackson.core*:2.6.3") //.exclude(group:"com.fasterxml.jackson.core" , module:"*" )
     dependsOn buildImage
-    imageName = "$registerBaseName/$dockerBranch/$project.name"
+    imageName = "$registerBaseName$dockerBranch/$project.name"
     tag="$dockerTag"
 }
 
